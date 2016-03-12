@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import com.thenairn.rsscripts.utils.items.ItemAPI;
 import org.osbot.rs07.api.model.GroundItem;
 import org.osbot.rs07.script.Script;
 
@@ -60,8 +62,8 @@ public abstract class GroundMonitor {
         Collections.sort(ci, new Comparator<GroundItem>(){
             @Override
             public int compare(GroundItem o1, GroundItem o2) {
-                int d0 = CheckPrice.get(o1.getId()); //Use distance instead of price
-                int d1 = CheckPrice.get(o2.getId()); //Use distance instead of price
+                int d0 = ItemAPI.getPrice(o1.getId()); //Use distance instead of price
+                int d1 = ItemAPI.getPrice(o2.getId()); //Use distance instead of price
                 return (d0 < d1 ? -1 :             //It will return the closer one first
                         (d0 == d1 ? 0 : 1));
             }
