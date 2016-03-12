@@ -1,0 +1,18 @@
+repositories {
+    mavenCentral()
+}
+
+buildscript {
+    repositories { jcenter() }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.3'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+dependencies {
+    compile fileTree(dir: 'lib', include: ['*.jar'])
+    compile 'com.googlecode.json-simple:json-simple:1.1'
+}
