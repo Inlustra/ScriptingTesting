@@ -28,7 +28,7 @@ public class ItemAPI {
         for (int i = 40; i < 300; i++) {
             RunescapeItem item = get(i);
             if (item != null)
-                System.out.println(i+" Price of " + item.getName() + " is: " + getPrice(i));
+                System.out.println(i + " Price of " + item.getName() + " is: " + getPrice(i));
 
         }
         timer.print();
@@ -69,22 +69,20 @@ public class ItemAPI {
 
     private static List<RunescapeItem> loadItemList() {
         List<RunescapeItem> runescapeItems = new ArrayList<>();
-        URL url = null;
         try {
-            url = new URL(ITEM_LIST_URL);
+            URL url = new URL(ITEM_LIST_URL);
             BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
             String inputLine;
             while ((inputLine = in.readLine()) != null) {
                 if (inputLine.isEmpty()) continue;
                 String[] item = inputLine.split(" - ");
                 try {
-                    String itemName = item[0];
                     int itemID = Integer.parseInt(item[item.length - 1]);
-                    itemName = item[0];
-                    for (int i = 1; i < item.length - 2; i++) {
-                        itemName += item[i];
+                    StringBuilder itemName = new StringBuilder();
+                    for (int i = 0; i < item.length - 2; i++) {
+                        itemName.append(item[i]);
                     }
-                    runescapeItems.add(new RunescapeItem(itemID, itemName));
+                    runescapeItems.add(new RunescapeItem(itemID, itemName.toString()));
                 } catch (Exception e) {
                     System.err.println(e.getMessage() + " | " + inputLine);
                 }

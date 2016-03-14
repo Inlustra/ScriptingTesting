@@ -1,4 +1,4 @@
-package com.thenairn.rsscripts.utils.client;
+package com.thenairn.rsscripts.utils.world;
 
 import org.osbot.rs07.api.filter.Filter;
 import org.osbot.rs07.api.ui.RS2Widget;
