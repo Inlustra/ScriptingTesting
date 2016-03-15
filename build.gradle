@@ -14,15 +14,22 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'com.github.johnrengelman.shadow'
 
+configurations {
+    provided
+    compile.extendsFrom provided
+}
+
 dependencies {
     compile fileTree(dir: 'lib', include: ['*.jar'])
     compile 'com.googlecode.json-simple:json-simple:1.1'
+    provided "org.projectlombok:lombok:1.12.6"
+
 }
 
 task copyJarToScripts {
     copy {
         from 'build/libs/ScriptingTesting.jar'
-        into homePath+"/OSBot/Scripts"
+        into homePath + "/OSBot/Scripts"
     }
 }
 
