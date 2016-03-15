@@ -43,8 +43,8 @@ public abstract class GroundMonitor {
         List<GroundItem> items = new ArrayList<GroundItem>();
         ArrayList<GroundItem> ci = new ArrayList<GroundItem>();
         int changes = 0;
-        for(GroundItem q : ctx.getGroundItems().getAll()){
-            if(q != null){
+        for (GroundItem q : ctx.getGroundItems().getAll()) {
+            if (q != null) {
                 items.add(q);
             }
         }
@@ -59,21 +59,17 @@ public abstract class GroundMonitor {
             }
         }
 
-        Collections.sort(ci, new Comparator<GroundItem>(){
-            @Override
-            public int compare(GroundItem o1, GroundItem o2) {
-                int d0 = ItemAPI.getPrice(o1.getId()); //Use distance instead of price
-                int d1 = ItemAPI.getPrice(o2.getId()); //Use distance instead of price
-                return (d0 < d1 ? -1 :             //It will return the closer one first
-                        (d0 == d1 ? 0 : 1));
-            }
-
+        Collections.sort(ci, (o1, o2) -> {
+            int d0 = ItemAPI.getPrice(o1.getId()); //Use distance instead of price
+            int d1 = ItemAPI.getPrice(o2.getId()); //Use distance instead of price
+            return (d0 < d1 ? -1 :             //It will return the closer one first
+                    (d0 == d1 ? 0 : 1));
         });
 
         return Arrays.copyOf(ci.toArray(new GroundItem[ci.size()]), changes);
     }
 
-    private boolean cached(GroundItem item){
+    private boolean cached(GroundItem item) {
         return cache.contains(item);
     }
 
