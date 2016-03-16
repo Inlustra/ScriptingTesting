@@ -1,6 +1,6 @@
 package com.thenairn.rsscripts.gui.event;
 
-import com.thenairn.rsscripts.gui.component.LightComponent;
+import com.thenairn.rsscripts.gui.LightComponent;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;

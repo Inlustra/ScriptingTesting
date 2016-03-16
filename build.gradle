@@ -1,4 +1,4 @@
-def homePath = System.properties['user.home']
+def homePath = System.properties['user.home'];
 
 repositories {
     mavenCentral()
@@ -22,7 +22,7 @@ configurations {
 dependencies {
     compile fileTree(dir: 'lib', include: ['*.jar'])
     compile 'com.googlecode.json-simple:json-simple:1.1'
-    provided "org.projectlombok:lombok:1.12.6"
+    compile "org.projectlombok:lombok:1.12.6"
 
 }
 
