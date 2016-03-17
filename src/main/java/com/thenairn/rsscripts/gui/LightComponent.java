@@ -38,7 +38,13 @@ public abstract class LightComponent implements Painter {
         if (hidden)
             return;
         paintBackground(graphics2D);
+        paintDebug(graphics2D);
         paintComponent(graphics2D);
+    }
+
+    protected void paintDebug(Graphics2D g2d) {
+        g2d.setColor(Color.red);
+        g2d.drawRect(0,0,width -1,height-1);
     }
 
     protected void paintBackground(Graphics2D g2d) {

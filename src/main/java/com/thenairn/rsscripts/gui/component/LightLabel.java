@@ -25,17 +25,16 @@ public class LightLabel extends LightComponent {
     public LightLabel(int x, int y, String text, Font font) {
         super(x, y, 0, 0);
         this.font = font;
+        this.text = text;
         FontRenderContext context = new FontRenderContext(getFont().getTransform(), true, true);
         Rectangle2D rect = font.getStringBounds(text, context);
         setWidth((int) rect.getWidth());
         setHeight((int) rect.getHeight());
-        System.out.println(rect.getWidth()+" "+rect.getHeight());
-        this.text = text;
     }
 
     @Override
     public void paintComponent(Graphics2D g2d) {
-        g2d.setColor(this.getForeground());
+        g2d.setColor(Color.red);
         g2d.setFont(font);
         g2d.drawString(text, 0, 0);
     }

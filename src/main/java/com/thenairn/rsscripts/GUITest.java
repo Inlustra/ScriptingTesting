@@ -29,10 +29,10 @@ public class GUITest extends JFrame implements ActionListener {
         LightImage imageComponent = new LightImage(100, 100, ItemAPI.get(45).getIcon());
         gui.add(imageComponent);
         String text = "the quick brown fox jumped over the lazy dog. the lonely fox chases after the one-eyed hound";
-        gui.add(new LightLabel(0, 0, text),
-                new LightLabel(0, 20, text.toUpperCase()),
-                new LightLabel(0, 40, text, Fonts.RUNESCAPE_CHAT_BOLD),
-                new LightLabel(0, 50, text.toUpperCase(), Fonts.RUNESCAPE_CHAT_BOLD));
+        gui.add(new LightLabel(50, 0, text),
+                new LightLabel(50, 40, text.toUpperCase()),
+                new LightLabel(50, 60, text, Fonts.RUNESCAPE_CHAT_BOLD),
+                new LightLabel(50, 80, text.toUpperCase(), Fonts.RUNESCAPE_CHAT_BOLD));
         timer.start();
     }
 
