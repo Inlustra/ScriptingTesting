@@ -1,8 +1,6 @@
 package com.thenairn.rsscripts;
 
 import com.thenairn.rsscripts.script.LightScript;
-import org.osbot.rs07.api.ui.Message;
-import org.osbot.rs07.script.Script;
 import org.osbot.rs07.script.ScriptManifest;
 
 import java.awt.*;
@@ -17,6 +15,6 @@ public class TestScript extends LightScript {
 
     @Override
     public int onLoop() throws InterruptedException {
-        return 0;
+        return 20;
     }
 }

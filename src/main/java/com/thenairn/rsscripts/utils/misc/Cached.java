@@ -14,5 +14,9 @@ public abstract class Cached<T> {
         this.cached = null;
     }
 
+    public void revalidate() {
+        this.cached = load();
+    }
+
     protected abstract T load();
 }

@@ -11,6 +11,7 @@ import java.awt.*;
 public abstract class LightScript extends Script {
 
     private final LightAPI api;
+    private LightInnerScript innerScript;
 
     @SuppressWarnings("deprecation")
     public LightScript() {

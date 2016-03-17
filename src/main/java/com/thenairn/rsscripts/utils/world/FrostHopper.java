@@ -23,7 +23,7 @@ public class FrostHopper {
 
     private final Script parent;
 
-    public static enum HopMode {
+    public enum HopMode {
 
         NONE(-1),
         ANY(-1),
@@ -32,7 +32,7 @@ public class FrostHopper {
 
         private final int spriteID;
 
-        private HopMode(int spriteID) {
+        HopMode(int spriteID) {
             this.spriteID = spriteID;
         }
 

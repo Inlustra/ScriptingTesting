@@ -3,6 +3,8 @@ package com.thenairn.rsscripts;
 import com.thenairn.rsscripts.gui.LightGUI;
 import com.thenairn.rsscripts.gui.component.LightImage;
 import com.thenairn.rsscripts.gui.component.LightLabel;
+import com.thenairn.rsscripts.gui.component.LightLabelButton;
+import com.thenairn.rsscripts.gui.event.LightMouseEvent;
 import com.thenairn.rsscripts.resource.Fonts;
 import com.thenairn.rsscripts.utils.items.ItemAPI;
 
@@ -29,10 +31,16 @@ public class GUITest extends JFrame implements ActionListener {
         LightImage imageComponent = new LightImage(100, 100, ItemAPI.get(45).getIcon());
         gui.add(imageComponent);
         String text = "the quick brown fox jumped over the lazy dog. the lonely fox chases after the one-eyed hound";
-        gui.add(new LightLabel(50, 0, text),
-                new LightLabel(50, 40, text.toUpperCase()),
-                new LightLabel(50, 60, text, Fonts.RUNESCAPE_CHAT_BOLD),
-                new LightLabel(50, 80, text.toUpperCase(), Fonts.RUNESCAPE_CHAT_BOLD));
+        gui.add(new LightLabel(20, 0, text));
+        gui.add(new LightLabelButton(20, 30, "Hello Button", Fonts.RUNESCAPE_CHAT_BOLD, 12, 10,
+                Color.BLACK, Color.WHITE,
+                Color.WHITE, Color.BLACK) {
+            @Override
+            public boolean mouseClicked(LightMouseEvent event) {
+                System.out.println("YOYOYOY");
+                return false;
+            }
+        });
         timer.start();
     }
 

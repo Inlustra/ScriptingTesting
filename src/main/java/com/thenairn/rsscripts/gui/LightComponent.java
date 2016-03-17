@@ -11,11 +11,12 @@ public abstract class LightComponent implements Painter {
 
     private int x, y;
     private int width, height;
-    private Color background = Color.white;
-    private Color foreground = Color.black;
-    private boolean hidden = false;
-    private boolean opaque = false;
     private LightContainer parent = null;
+
+    protected Paint background = Color.white;
+    protected Paint foreground = Color.black;
+    protected boolean hidden = false;
+    protected boolean opaque = false;
 
     public LightComponent(int x, int y, int width, int height) {
         this.x = x;
@@ -42,17 +43,26 @@ public abstract class LightComponent implements Painter {
         paintComponent(graphics2D);
     }
 
+
     protected void paintDebug(Graphics2D g2d) {
         g2d.setColor(Color.red);
-        g2d.drawRect(0,0,width -1,height-1);
+        g2d.drawRect(0, 0, width - 1, height - 1);
     }
 
     protected void paintBackground(Graphics2D g2d) {
         if (opaque) {
             return;
         }
-        g2d.setColor(background);
+        g2d.setPaint(getBackground());
         g2d.fillRect(0, 0, getWidth(), getHeight());
+    }
+
+    public LightGUI getRootComponent() {
+        LightContainer container = getParent();
+        while (!(container instanceof LightGUI)) {
+            container = container.getParent();
+        }
+        return (LightGUI) container;
     }
 
     public abstract void paintComponent(Graphics2D g2d);

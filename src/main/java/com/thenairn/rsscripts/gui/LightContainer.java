@@ -11,7 +11,7 @@ import java.util.ListIterator;
  * Created by thoma on 15/03/2016.
  */
 public class LightContainer extends LightComponent {
-
+    private LightComponent mouseOver = null;
     List<LightComponent> components = new LinkedList<>();
 
     public LightContainer(int x, int y, int width, int height) {
@@ -46,8 +46,9 @@ public class LightContainer extends LightComponent {
             if (component.isHidden()) {
                 continue;
             }
-            if (component.isWithin(x, y))
+            if (component.isWithin(x, y)) {
                 return component;
+            }
         }
         return null;
     }
@@ -100,10 +101,31 @@ public class LightContainer extends LightComponent {
     @Override
     public boolean mouseMoved(LightMouseEvent e) {
         LightComponent component = getElementAt(e.getX(), e.getY());
+        checkMouseOver(e, component);
         if (component != null) {
             return component.mouseMoved(new LightMouseEvent(e, component));
         }
         return super.mouseMoved(e);
+    }
+
+    private void checkMouseOver(LightMouseEvent event, LightComponent component) { //TODO, This can be done better
+        if (mouseOver == null && component != null) {
+            component.mouseEntered(new LightMouseEvent(event, component));
+            mouseOver = component;
+            return;
+        }
+        if (mouseOver != null && component != null) {
+            if (mouseOver == component) {
+                return;
+            }
+            mouseOver.mouseExited(new LightMouseEvent(event, mouseOver));
+            component.mouseEntered(new LightMouseEvent(event, component));
+            mouseOver = component;
+        }
+        if (mouseOver != null && component == null) {
+            mouseOver.mouseExited(new LightMouseEvent(event, mouseOver));
+            mouseOver = null;
+        }
     }
 
     @Override

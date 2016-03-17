@@ -12,14 +12,20 @@ public class LightImage extends LightComponent {
 
     BufferedImage image;
 
-    public LightImage(int x, int y, BufferedImage image) {
-        super(x, y, image.getWidth(), image.getHeight());
+    public LightImage(int x, int y, int width, int height, BufferedImage image) {
+        super(x, y, width, height);
         this.setOpaque(true);
         this.image = image;
     }
 
+
+    public LightImage(int x, int y, BufferedImage image) {
+        this(x, y, image.getWidth(), image.getHeight(), image);
+    }
+
     @Override
     public void paintComponent(Graphics2D g2d) {
-        g2d.drawImage(image, 0, 0, null);
+        g2d.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+
     }
 }

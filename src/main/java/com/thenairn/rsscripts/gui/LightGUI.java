@@ -28,7 +28,10 @@ public class LightGUI extends LightContainer implements MouseListener, MouseMoti
         super(0, 0, frame.getHeight(), frame.getWidth());
         frame.addMouseMotionListener(this);
         frame.addMouseListener(this);
-        this.setBackground(Color.yellow);
+    }
+
+    public LightAPI getApi() {
+        return api;
     }
 
     @Override
