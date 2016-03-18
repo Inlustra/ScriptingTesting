@@ -1,6 +1,6 @@
-package com.thenairn.rsscripts.gui.util;
+package com.thenairn.rsscripts.utils.gui.util;
 
-import com.thenairn.rsscripts.gui.LightComponent;
+import com.thenairn.rsscripts.utils.gui.LightComponent;
 
 import java.util.Iterator;
 

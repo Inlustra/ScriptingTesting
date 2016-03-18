@@ -1,10 +1,10 @@
 package com.thenairn.rsscripts;
 
-import com.thenairn.rsscripts.gui.LightGUI;
-import com.thenairn.rsscripts.gui.component.LightImage;
-import com.thenairn.rsscripts.gui.component.LightLabel;
-import com.thenairn.rsscripts.gui.component.LightLabelButton;
-import com.thenairn.rsscripts.gui.event.LightMouseEvent;
+import com.thenairn.rsscripts.utils.gui.LightGUI;
+import com.thenairn.rsscripts.utils.gui.component.LightImage;
+import com.thenairn.rsscripts.utils.gui.component.LightLabel;
+import com.thenairn.rsscripts.utils.gui.component.LightLabelButton;
+import com.thenairn.rsscripts.utils.gui.event.LightMouseEvent;
 import com.thenairn.rsscripts.resource.Fonts;
 import com.thenairn.rsscripts.utils.items.ItemAPI;
 

@@ -2,12 +2,9 @@ package com.thenairn.rsscripts.utils.items;
 
 import com.thenairn.rsscripts.utils.misc.SimpleTimer;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,6 +35,10 @@ public class ItemAPI {
     private static Map<Integer, RunescapeItem> items;
 
     public static void init() {
+        if (items != null) {
+            System.out.println("Already initialized the ItemAPI");
+            return;
+        }
         long start = System.currentTimeMillis();
         items = new HashMap<>();
         List<RunescapeItem> items = loadItemList();

@@ -1,7 +1,6 @@
-package com.thenairn.rsscripts.gui;
+package com.thenairn.rsscripts.utils.gui;
 
-import com.thenairn.rsscripts.gui.event.LightMouseEvent;
-import com.thenairn.rsscripts.script.LightAPI;
+import com.thenairn.rsscripts.utils.gui.event.LightMouseEvent;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,24 +13,15 @@ import java.awt.event.MouseMotionListener;
  */
 public class LightGUI extends LightContainer implements MouseListener, MouseMotionListener {
 
-    private LightAPI api;
 
-    public LightGUI(LightAPI api) {
-        super(0, 0, api.getBot().getCanvas().getWidth(),
-                api.getBot().getCanvas().getHeight());
-        this.api = api;
-        api.getBot().getCanvas().addMouseMotionListener(this);
-        api.getBot().getCanvas().addMouseListener(this);
+    public LightGUI(int width, int height) {
+        super(0, 0, width, height);
     }
 
     public LightGUI(JComponent frame) {
         super(0, 0, frame.getHeight(), frame.getWidth());
         frame.addMouseMotionListener(this);
         frame.addMouseListener(this);
-    }
-
-    public LightAPI getApi() {
-        return api;
     }
 
     @Override

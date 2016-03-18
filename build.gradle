@@ -12,25 +12,35 @@ buildscript {
 }
 
 apply plugin: 'java'
-apply plugin: 'com.github.johnrengelman.shadow'    
+apply plugin: 'com.github.johnrengelman.shadow'
 
 configurations {
     provided
     compile.extendsFrom provided
 }
 
-dependencies {
-    compile fileTree(dir: 'lib', include: ['*.jar'])
-    compile 'com.googlecode.json-simple:json-simple:1.1'
-    provided "org.projectlombok:lombok:1.12.6"
+tasks.withType(AbstractCompile) {
+    classpath += configurations.shadow
+}
 
+dependencies {
+    shadow fileTree(dir: 'lib', include: ['*.jar'])
+    shadow "org.projectlombok:lombok:1.12.6"
+    compile 'com.googlecode.json-simple:json-simple:1.1'
 }
 
 task copyJarToScripts {
     copy {
-        from 'build/libs/ScriptingTesting.jar'
-        into homePath + "/OSBot/Scripts"
+        from 'build/libs/ScriptingTesting-all.jar'
+        into homePath + "/OSBot/Scripts/"
+        rename('ScriptingTesting-all.jar', "ScriptTest-" + System.currentTimeMillis() + ".jar")
     }
 }
 
-copyJarToScripts.shouldRunAfter(jar);
+task cleanScriptsFolder(type: Delete) {
+    delete fileTree(dir: homePath + "/OSBot/Scripts/", include: 'ScriptTest-*.jar')
+}
+
+shadowJar.dependsOn build;
+cleanScriptsFolder.dependsOn shadowJar;
+copyJarToScripts.mustRunAfter cleanScriptsFolder;

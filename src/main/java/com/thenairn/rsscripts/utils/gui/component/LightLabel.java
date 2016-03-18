@@ -1,6 +1,6 @@
-package com.thenairn.rsscripts.gui.component;
+package com.thenairn.rsscripts.utils.gui.component;
 
-import com.thenairn.rsscripts.gui.LightComponent;
+import com.thenairn.rsscripts.utils.gui.LightComponent;
 import com.thenairn.rsscripts.resource.Fonts;
 import com.thenairn.rsscripts.utils.misc.Cached;
 import lombok.Getter;

@@ -1,6 +1,6 @@
-package com.thenairn.rsscripts.gui;
+package com.thenairn.rsscripts.utils.gui;
 
-import com.thenairn.rsscripts.gui.event.LightMouseEvent;
+import com.thenairn.rsscripts.utils.gui.event.LightMouseEvent;
 
 import java.awt.*;
 import java.util.LinkedList;

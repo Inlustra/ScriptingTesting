@@ -1,4 +1,4 @@
-package com.thenairn.rsscripts.gui;
+package com.thenairn.rsscripts.utils.gui;
 
 /**
  * Created by Thomas Nairn on 17/03/2016.
