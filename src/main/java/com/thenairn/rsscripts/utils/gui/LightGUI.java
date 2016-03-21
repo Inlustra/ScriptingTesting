@@ -16,6 +16,7 @@ public class LightGUI extends LightContainer implements MouseListener, MouseMoti
 
     public LightGUI(int width, int height) {
         super(0, 0, width, height);
+        this.setOpaque(false);
     }
 
     public LightGUI(JComponent frame) {
@@ -26,7 +27,7 @@ public class LightGUI extends LightContainer implements MouseListener, MouseMoti
 
     @Override
     public void onPaint(Graphics2D graphics2D) {
-        graphics2D.clearRect(0, 0, getWidth(), getHeight());
+        //graphics2D.clearRect(0, 0, getWidth(), getHeight());
         super.onPaint(graphics2D);
     }
 

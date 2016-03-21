@@ -1,10 +1,10 @@
-package com.thenairn.rsscripts.utils.script.selector;
+package com.thenairn.rsscripts.script.selector;
 
 import com.thenairn.rsscripts.utils.gui.LightGUI;
 import com.thenairn.rsscripts.utils.gui.component.LightImage;
 import com.thenairn.rsscripts.utils.items.ItemAPI;
-import com.thenairn.rsscripts.utils.script.LightScript;
-import com.thenairn.rsscripts.utils.script.gui.ChatboxContainer;
+import com.thenairn.rsscripts.script.LightScript;
+import com.thenairn.rsscripts.script.gui.ChatboxContainer;
 
 /**
  * Created by Thomas Nairn on 18/03/2016.

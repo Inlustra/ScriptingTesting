@@ -1,4 +1,4 @@
-package com.thenairn.rsscripts.utils.script.gui;
+package com.thenairn.rsscripts.script.gui;
 
 import com.thenairn.rsscripts.utils.gui.LightContainer;
 

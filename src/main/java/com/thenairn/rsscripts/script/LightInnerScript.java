@@ -1,4 +1,4 @@
-package com.thenairn.rsscripts.utils.script;
+package com.thenairn.rsscripts.script;
 
 import com.thenairn.rsscripts.utils.gui.LightGUI;
 

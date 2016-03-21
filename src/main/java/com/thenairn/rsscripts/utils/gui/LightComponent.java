@@ -2,11 +2,13 @@ package com.thenairn.rsscripts.utils.gui;
 
 import com.thenairn.rsscripts.utils.gui.event.LightMouseEvent;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.osbot.rs07.canvas.paint.Painter;
 
 import java.awt.*;
 
 @Data
+@Slf4j
 public abstract class LightComponent implements Painter {
 
     private int x, y;
@@ -50,7 +52,7 @@ public abstract class LightComponent implements Painter {
     }
 
     protected void paintBackground(Graphics2D g2d) {
-        if (opaque) {
+        if (!opaque) {
             return;
         }
         g2d.setPaint(getBackground());
@@ -68,44 +70,37 @@ public abstract class LightComponent implements Painter {
     public abstract void paintComponent(Graphics2D g2d);
 
     public boolean mouseClicked(LightMouseEvent event) {
-        System.out.println(this.getClass().getSimpleName() + " Clicked");
-        System.out.println("At " + event.getX() + " " + event.getY());
+        log.debug(this.getClass().getSimpleName() + " Clicked");
         return false;
     }
 
     public boolean mousePressed(LightMouseEvent event) {
-        System.out.println(this.getClass().getSimpleName() + " Pressed");
-        System.out.println("At " + event.getX() + " " + event.getY());
+        log.debug(this.getClass().getSimpleName() + " Pressed");
         return false;
     }
 
     public boolean mouseReleased(LightMouseEvent event) {
-        System.out.println(this.getClass().getSimpleName() + " Released");
-        System.out.println("At " + event.getX() + " " + event.getY());
+        log.debug(this.getClass().getSimpleName() + " Released");
         return false;
     }
 
     public boolean mouseEntered(LightMouseEvent event) {
-        System.out.println(this.getClass().getSimpleName() + " Entered");
-        System.out.println("At " + event.getX() + " " + event.getY());
+        log.debug(this.getClass().getSimpleName() + " Entered");
         return false;
     }
 
     public boolean mouseExited(LightMouseEvent event) {
-        System.out.println(this.getClass().getSimpleName() + " Exited");
-        System.out.println("At " + event.getX() + " " + event.getY());
+        log.debug(this.getClass().getSimpleName() + " Exited");
         return false;
     }
 
     public boolean mouseMoved(LightMouseEvent event) {
-        System.out.println(this.getClass().getSimpleName() + " Moved");
-        System.out.println("At " + event.getX() + " " + event.getY());
+        log.debug(this.getClass().getSimpleName() + " Moved");
         return false;
     }
 
     public boolean mouseDragged(LightMouseEvent event) {
-        System.out.println(this.getClass().getSimpleName() + " Dragged");
-        System.out.println("At " + event.getX() + " " + event.getY());
+        log.debug(this.getClass().getSimpleName() + " Dragged");
         return false;
     }
 }

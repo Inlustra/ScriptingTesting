@@ -1,6 +1,6 @@
-package com.thenairn.rsscripts.utils.script.selector;
+package com.thenairn.rsscripts.script.selector;
 
-import com.thenairn.rsscripts.utils.script.LightInnerScript;
+import com.thenairn.rsscripts.script.LightInnerScript;
 
 public class InnerScriptDescriptor {
     LightInnerScript script;

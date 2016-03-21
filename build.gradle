@@ -24,9 +24,10 @@ tasks.withType(AbstractCompile) {
 }
 
 dependencies {
-    shadow fileTree(dir: 'lib', include: ['*.jar'])
+    compile fileTree(dir: 'lib', include: ['*.jar'])
     shadow "org.projectlombok:lombok:1.12.6"
-    compile 'com.googlecode.json-simple:json-simple:1.1'
+    shadow 'org.slf4j:slf4j-simple:1.7.19'
+    shadow 'com.googlecode.json-simple:json-simple:1.1'
 }
 
 task copyJarToScripts {
@@ -40,7 +41,9 @@ task copyJarToScripts {
 task cleanScriptsFolder(type: Delete) {
     delete fileTree(dir: homePath + "/OSBot/Scripts/", include: 'ScriptTest-*.jar')
 }
+build.finalizedBy(shadowJar)
+shadowJar.finalizedBy(copyJarToScripts)
 
-shadowJar.dependsOn build;
-cleanScriptsFolder.dependsOn shadowJar;
-copyJarToScripts.mustRunAfter cleanScriptsFolder;
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.12'
+}

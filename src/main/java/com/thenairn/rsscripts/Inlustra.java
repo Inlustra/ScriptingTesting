@@ -1,10 +1,10 @@
 package com.thenairn.rsscripts;
 
-import com.thenairn.rsscripts.utils.script.LightScript;
-import com.thenairn.rsscripts.utils.script.selector.InnerScriptDescriptor;
+import com.thenairn.rsscripts.script.LightScript;
+import com.thenairn.rsscripts.script.selector.InnerScriptDescriptor;
 import org.osbot.rs07.script.ScriptManifest;
 
-@ScriptManifest(version = 1, author = "Inlustra", logo = "", name = "Light Up The Dark4", info = "The script toolkit.")
+@ScriptManifest(version = 10, author = "Inlustra", logo = "", name = "Light Up The Dark10", info = "The script toolkit.")
 public class Inlustra extends LightScript {
 
     @Override
