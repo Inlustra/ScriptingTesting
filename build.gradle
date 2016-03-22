@@ -1,49 +1,66 @@
 def homePath = System.properties['user.home'];
 
-repositories {
-    mavenCentral()
-}
-
 buildscript {
-    repositories { jcenter() }
+    repositories {
+        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
     dependencies {
         classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.3'
     }
 }
 
 apply plugin: 'java'
+apply plugin: 'idea'
 apply plugin: 'com.github.johnrengelman.shadow'
 
-configurations {
-    provided
-    compile.extendsFrom provided
-}
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'com.github.johnrengelman.shadow'
 
-tasks.withType(AbstractCompile) {
-    classpath += configurations.shadow
-}
+    repositories {
+        mavenCentral()
+    }
 
-dependencies {
-    compile fileTree(dir: 'lib', include: ['*.jar'])
-    shadow "org.projectlombok:lombok:1.12.6"
-    shadow 'org.slf4j:slf4j-simple:1.7.19'
-    shadow 'com.googlecode.json-simple:json-simple:1.1'
-}
+    dependencies {
+        shadow fileTree(dir: rootDir.getPath() + "/lib", include: ['*.jar'])
+        shadow "org.projectlombok:lombok:1.12.6"
+        compile 'org.slf4j:slf4j-simple:1.7.19'
+    }
 
-task copyJarToScripts {
-    copy {
-        from 'build/libs/ScriptingTesting-all.jar'
-        into homePath + "/OSBot/Scripts/"
-        rename('ScriptingTesting-all.jar', "ScriptTest-" + System.currentTimeMillis() + ".jar")
+    plugins.withType(IdeaPlugin) {
+        idea.module.scopes.COMPILE.plus = [configurations.shadow]
+    }
+
+    tasks.withType(AbstractCompile) {
+        classpath += configurations.shadow
+    }
+
+    configurations {
+        provided
+        compile.extendsFrom provided
     }
 }
 
+subprojects {
+    task copyJarToScripts {
+        doLast {
+            println shadowJar.archivePath
+            copy {
+                from shadowJar.archivePath
+                into homePath + "/OSBot/Scripts/"
+                rename(shadowJar.archivePath.getName(),
+                        shadowJar.archivePath.getName().replaceAll("all", System.currentTimeMillis() + ""))
+            }
+        }
+    }
+    copyJarToScripts.dependsOn(shadowJar)
+}
+
+
 task cleanScriptsFolder(type: Delete) {
     delete fileTree(dir: homePath + "/OSBot/Scripts/", include: 'ScriptTest-*.jar')
-}
-build.finalizedBy(shadowJar)
-shadowJar.finalizedBy(copyJarToScripts)
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.12'
 }
