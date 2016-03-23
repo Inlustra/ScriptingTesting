@@ -11,10 +11,14 @@ public abstract class LightTaskAdapter implements LightTask {
     @Override
     public void onStart(LightScript script) {
         log.trace("Task Starting");
+        script.getBot().getCanvas().addMouseListener(this.gui());
+        script.getBot().getCanvas().addMouseMotionListener(this.gui());
     }
 
     @Override
     public void onStop(LightScript script) {
         log.trace("Task Stopping");
+        script.getBot().getCanvas().addMouseListener(this.gui());
+        script.getBot().getCanvas().addMouseMotionListener(this.gui());
     }
 }

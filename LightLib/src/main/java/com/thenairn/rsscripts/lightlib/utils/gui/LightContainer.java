@@ -1,15 +1,14 @@
 package com.thenairn.rsscripts.lightlib.utils.gui;
 
 import com.thenairn.rsscripts.lightlib.utils.gui.event.LightMouseEvent;
+import lombok.extern.slf4j.Slf4j;
 
 import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
-/**
- * Created by thoma on 15/03/2016.
- */
+@Slf4j
 public class LightContainer extends LightComponent {
     private LightComponent mouseOver = null;
     List<LightComponent> components = new LinkedList<>();
@@ -132,6 +131,7 @@ public class LightContainer extends LightComponent {
     public boolean mouseDragged(LightMouseEvent e) {
         LightComponent component = getElementAt(e.getX(), e.getY());
         if (component != null) {
+            log.trace("Mouse Dragged for component: " + component.getClass().getSimpleName());
             return component.mouseDragged(new LightMouseEvent(e, component));
         }
         return super.mouseDragged(e);

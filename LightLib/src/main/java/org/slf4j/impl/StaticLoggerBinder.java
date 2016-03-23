@@ -1,4 +1,4 @@
-package com.thenairn.rsscripts.lightlib.utils.log;
+package org.slf4j.impl;
 
 import org.slf4j.ILoggerFactory;
 import org.slf4j.spi.LoggerFactoryBinder;
@@ -6,19 +6,19 @@ import org.slf4j.spi.LoggerFactoryBinder;
 /**
  * Created by Thomas Nairn on 21/03/2016.
  */
-public class OSBotLoggerBinder implements LoggerFactoryBinder {
+public class StaticLoggerBinder implements LoggerFactoryBinder {
 
     /**
      * The unique instance of this class.
      */
-    private static final OSBotLoggerBinder SINGLETON = new OSBotLoggerBinder();
+    private static final StaticLoggerBinder SINGLETON = new StaticLoggerBinder();
 
     /**
      * Return the singleton of this class.
      *
      * @return the StaticLoggerBinder singleton
      */
-    public static final OSBotLoggerBinder getSingleton() {
+    public static final StaticLoggerBinder getSingleton() {
         return SINGLETON;
     }
 
@@ -37,7 +37,7 @@ public class OSBotLoggerBinder implements LoggerFactoryBinder {
      */
     private final ILoggerFactory loggerFactory;
 
-    private OSBotLoggerBinder() {
+    private StaticLoggerBinder() {
         loggerFactory = new OSBotLoggerFactory();
     }
 

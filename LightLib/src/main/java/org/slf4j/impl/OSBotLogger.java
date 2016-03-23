@@ -1,4 +1,4 @@
-package com.thenairn.rsscripts.lightlib.utils.log;
+package org.slf4j.impl;
 
 import com.thenairn.rsscripts.lightlib.LightAPI;
 import org.slf4j.helpers.MarkerIgnoringBase;
@@ -8,7 +8,10 @@ import org.slf4j.helpers.MarkerIgnoringBase;
  */
 public class OSBotLogger extends MarkerIgnoringBase {
 
-    private static org.osbot.utility.Logger logger = LightAPI.get().logger;
+    private static org.osbot.utility.Logger getLogger() {
+        return LightAPI.get().logger;
+    }
+
     private final String name;
 
     public OSBotLogger(String name) {
@@ -20,31 +23,31 @@ public class OSBotLogger extends MarkerIgnoringBase {
 
             @Override
             protected void perform(String log) {
-                logger.debug(log);
+                getLogger().debug(log);
             }
 
         }, DEBUG("[DEBUG]") {
             @Override
             protected void perform(String log) {
-                logger.debug(log);
+                getLogger().debug(log);
             }
 
         }, INFO("[INFO]") {
             @Override
             protected void perform(String log) {
-                logger.info(log);
+                getLogger().info(log);
             }
 
         }, WARN("[WARN]") {
             @Override
             protected void perform(String log) {
-                logger.warn(log);
+                getLogger().warn(log);
             }
 
         }, ERROR("[ERROR]") {
             @Override
             protected void perform(String log) {
-                logger.error(log);
+                getLogger().error(log);
             }
         };
 
@@ -61,11 +64,14 @@ public class OSBotLogger extends MarkerIgnoringBase {
         }
 
         public void log(OSBotLogger osb, String str, Throwable t) {
-            logger.error(osb.name + " " + format(str), t);
+            getLogger().error(osb.name + " " + format(str), t);
         }
 
         public String format(String str, Object... objects) {
-            return this.pre + " " + String.format(str, objects);
+            if (str == null) {
+                return this.pre + " null";
+            }
+            return this.pre + " " + str;
         }
     }
 

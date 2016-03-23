@@ -70,37 +70,30 @@ public abstract class LightComponent implements Painter {
     public abstract void paintComponent(Graphics2D g2d);
 
     public boolean mouseClicked(LightMouseEvent event) {
-        log.debug(this.getClass().getSimpleName() + " Clicked");
         return false;
     }
 
     public boolean mousePressed(LightMouseEvent event) {
-        log.debug(this.getClass().getSimpleName() + " Pressed");
         return false;
     }
 
     public boolean mouseReleased(LightMouseEvent event) {
-        log.debug(this.getClass().getSimpleName() + " Released");
         return false;
     }
 
     public boolean mouseEntered(LightMouseEvent event) {
-        log.debug(this.getClass().getSimpleName() + " Entered");
         return false;
     }
 
     public boolean mouseExited(LightMouseEvent event) {
-        log.debug(this.getClass().getSimpleName() + " Exited");
         return false;
     }
 
     public boolean mouseMoved(LightMouseEvent event) {
-        log.debug(this.getClass().getSimpleName() + " Moved");
         return false;
     }
 
     public boolean mouseDragged(LightMouseEvent event) {
-        log.debug(this.getClass().getSimpleName() + " Dragged");
         return false;
     }
 }

@@ -15,5 +15,4 @@ public class LightMouseEvent extends MouseEvent {
                 event.getModifiers(), event.getX() - source.getX(), event.getY() - source.getY(),
                 event.getClickCount(), event.isPopupTrigger(), event.getButton());
     }
-
 }

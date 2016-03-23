@@ -9,12 +9,12 @@ import com.thenairn.rsscripts.lightlib.utils.gui.component.LightImage;
 /**
  * Created by Thomas Nairn on 18/03/2016.
  */
-public class ScriptSelectorGUI extends LightGUI {
+public class TaskSelectorGUI extends LightGUI {
 
     private final LightScript script;
     private ChatboxContainer container;
 
-    public ScriptSelectorGUI(LightScript script, int width, int height) {
+    public TaskSelectorGUI(LightScript script, int width, int height) {
         super(width, height);
         this.script = script;
         setup();

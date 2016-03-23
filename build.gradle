@@ -28,7 +28,7 @@ allprojects {
     dependencies {
         shadow fileTree(dir: rootDir.getPath() + "/lib", include: ['*.jar'])
         shadow "org.projectlombok:lombok:1.12.6"
-        compile 'org.slf4j:slf4j-simple:1.7.19'
+        compile 'org.slf4j:slf4j-api:1.7.19'
     }
 
     plugins.withType(IdeaPlugin) {
@@ -60,7 +60,10 @@ subprojects {
     copyJarToScripts.dependsOn(shadowJar)
 }
 
-
 task cleanScriptsFolder(type: Delete) {
     delete fileTree(dir: homePath + "/OSBot/Scripts/", include: 'ScriptTest-*.jar')
+}
+
+task runOSBot << {
+    javaexec { main="-jar"; args "lib/OSBot 2.4.43.jar" }
 }

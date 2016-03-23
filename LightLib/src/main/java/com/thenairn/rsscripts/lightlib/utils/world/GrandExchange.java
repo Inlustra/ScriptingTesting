@@ -120,7 +120,7 @@ public class GrandExchange {
         }
     }
 
-    private void selectBuyItem(String itemName) {
+    private void selectBuyItem(final String itemName) {
         if (api.getGrandExchange().isBuyOfferOpen() && !getName(itemSelection().getItemId()).equals(itemName)) {
             if (itemSelection() != null && preIndex() == null) {
                 itemSelection().interact("Choose item");

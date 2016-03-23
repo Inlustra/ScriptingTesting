@@ -1,17 +1,16 @@
 package com.thenairn.rsscripts.lightlib.utils.gui;
 
 import com.thenairn.rsscripts.lightlib.utils.gui.event.LightMouseEvent;
+import lombok.extern.slf4j.Slf4j;
+import org.osbot.rs07.input.mouse.BotMouseListener;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-/**
- * Created by thoma on 15/03/2016.
- */
-public class LightGUI extends LightContainer implements MouseListener, MouseMotionListener {
+@Slf4j
+public class LightGUI extends LightContainer implements BotMouseListener, MouseMotionListener {
 
 
     public LightGUI(int width, int height) {
@@ -33,37 +32,62 @@ public class LightGUI extends LightContainer implements MouseListener, MouseMoti
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        this.mouseClicked(new LightMouseEvent(e, this));
+        if (this.mouseClicked(new LightMouseEvent(e, this))) {
+            e.consume();
+            log.trace("Consumed click event.");
+        }
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        this.mousePressed(new LightMouseEvent(e, this));
-
+        if (this.mousePressed(new LightMouseEvent(e, this))) {
+            e.consume();
+            log.trace("Consumed Pressed event.");
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        this.mouseReleased(new LightMouseEvent(e, this));
+        if (this.mouseReleased(new LightMouseEvent(e, this))) {
+            e.consume();
+            log.trace("Consumed Released event.");
+        }
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        this.mouseEntered(new LightMouseEvent(e, this));
+        if (this.mouseEntered(new LightMouseEvent(e, this))) {
+            e.consume();
+            log.trace("Consumed Entered event.");
+        }
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        this.mouseExited(new LightMouseEvent(e, this));
+        if (this.mouseExited(new LightMouseEvent(e, this))) {
+            e.consume();
+            log.trace("Consumed Exited event.");
+        }
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        this.mouseDragged(new LightMouseEvent(e, this));
+        if (this.mouseDragged(new LightMouseEvent(e, this))) {
+            e.consume();
+            log.trace("Consumed Dragged event.");
+        }
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        this.mouseMoved(new LightMouseEvent(e, this));
+        if (this.mouseMoved(new LightMouseEvent(e, this))) {
+            e.consume();
+            log.trace("Consumed Moved event.");
+        }
+    }
+
+    @Override
+    public boolean blockInput(Point point) {
+        return false;
     }
 }

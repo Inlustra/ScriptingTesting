@@ -1,30 +1,28 @@
 package com.thenairn.rsscripts.lightlib.task.selector;
 
-import com.thenairn.rsscripts.lightlib.utils.gui.LightGUI;
-import com.thenairn.rsscripts.lightlib.task.LightTask;
 import com.thenairn.rsscripts.lightlib.LightScript;
-
-import static org.pushingpixels.lafwidget.utils.LookUtils.log;
+import com.thenairn.rsscripts.lightlib.task.LightTaskAdapter;
+import com.thenairn.rsscripts.lightlib.utils.gui.LightGUI;
 
 /**
  * Created by Thomas Nairn on 18/03/2016.
  */
-public class ScriptSelector implements LightTask {
+public class TaskSelector extends LightTaskAdapter {
 
     private LightScript script;
-    private ScriptSelectorGUI gui;
+    private TaskSelectorGUI gui;
 
     @Override
     public void onStart(LightScript script) {
-        this.script = script;
-        log("Starting Script Selector");
-        this.gui = new ScriptSelectorGUI(script, script.getBot().getCanvas().getWidth(),
+        this.gui = new TaskSelectorGUI(script, script.getBot().getCanvas().getWidth(),
                 script.getBot().getCanvas().getHeight());
+        super.onStart(script);
+        script.getBot().setHumanInputEnabled(true);
     }
 
     @Override
     public void onStop(LightScript script) {
-
+        super.onStop(script);
     }
 
     @Override
