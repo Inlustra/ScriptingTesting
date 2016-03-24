@@ -64,4 +64,9 @@ public class LightImage extends LightComponent {
     public boolean mouseDragged(LightMouseEvent event) {
         return true;
     }
+
+    @Override
+    public boolean blockInput(Point point) {
+        return true;
+    }
 }

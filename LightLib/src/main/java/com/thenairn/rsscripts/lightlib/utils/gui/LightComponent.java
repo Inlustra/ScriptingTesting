@@ -96,4 +96,8 @@ public abstract class LightComponent implements Painter {
     public boolean mouseDragged(LightMouseEvent event) {
         return false;
     }
+
+    public boolean blockInput(Point point) {
+        return true;
+    }
 }

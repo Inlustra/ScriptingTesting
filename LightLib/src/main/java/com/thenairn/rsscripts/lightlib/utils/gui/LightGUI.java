@@ -88,6 +88,6 @@ public class LightGUI extends LightContainer implements BotMouseListener, MouseM
 
     @Override
     public boolean blockInput(Point point) {
-        return false;
+        return super.blockInput(point);
     }
 }

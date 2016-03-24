@@ -136,4 +136,14 @@ public class LightContainer extends LightComponent {
         }
         return super.mouseDragged(e);
     }
+
+    @Override
+    public boolean blockInput(Point e) {
+        LightComponent component = getElementAt((int) e.getX(), (int) e.getY());
+        if (component != null) {
+            log.trace("Block Input for component: " + component.getClass().getSimpleName());
+            return component.blockInput(new Point((int) e.getX() - component.getX(), (int) e.getY() - component.getY()));
+        }
+        return false;
+    }
 }
