@@ -1,6 +1,7 @@
 package com.thenairn.rsscripts.lightlib.utils.gui;
 
 import com.thenairn.rsscripts.lightlib.utils.gui.event.LightMouseEvent;
+import com.thenairn.rsscripts.lightlib.utils.gui.util.ParentIterator;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.osbot.rs07.canvas.paint.Painter;
@@ -42,12 +43,13 @@ public abstract class LightComponent implements Painter {
             return;
         paintBackground(graphics2D);
         paintDebug(graphics2D);
+        graphics2D.setPaint(foreground);
         paintComponent(graphics2D);
     }
 
 
     protected void paintDebug(Graphics2D g2d) {
-        g2d.setColor(Color.red);
+        g2d.setPaint(Color.red);
         g2d.drawRect(0, 0, width - 1, height - 1);
     }
 
@@ -67,9 +69,14 @@ public abstract class LightComponent implements Painter {
         return (LightGUI) container;
     }
 
+    public ParentIterator parentIterator() {
+        return new ParentIterator(this);
+    }
+
     public abstract void paintComponent(Graphics2D g2d);
 
     public boolean mouseClicked(LightMouseEvent event) {
+        log.trace(this.getClass().getSimpleName() + " Clicked!");
         return false;
     }
 

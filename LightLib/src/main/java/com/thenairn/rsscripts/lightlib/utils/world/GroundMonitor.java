@@ -1,45 +1,53 @@
 package com.thenairn.rsscripts.lightlib.utils.world;
 
+import com.thenairn.rsscripts.lightlib.LightScript;
+import com.thenairn.rsscripts.lightlib.task.TaskedLightScript;
+import com.thenairn.rsscripts.lightlib.task.type.BackgroundTask;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.osbot.rs07.api.model.GroundItem;
-import org.osbot.rs07.script.API;
+import org.osbot.rs07.script.MethodProvider;
 
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
+@Slf4j
+public abstract class GroundMonitor implements BackgroundTask {
 
-public abstract class GroundMonitor {
-
-    private Set<GroundItem> items;
+    @Getter
+    private List<GroundItem> items;
     private Comparator<GroundItem> comparator;
-    private API api;
+    private MethodProvider methodProvider;
+    private boolean stopped = false;
 
-    public GroundMonitor(API api) {
-        this(api, new DistanceGroundItemComparator(api));
+    public GroundMonitor() {
     }
 
-    public GroundMonitor(API api, Comparator<GroundItem> comparator) {
-        this.api = api;
+    public GroundMonitor(MethodProvider provider) {
+        this.methodProvider = provider;
+    }
+
+    public GroundMonitor(Comparator<GroundItem> comparator) {
         this.comparator = comparator;
-        this.items = new TreeSet<>(this.comparator);
     }
 
-    private Set<GroundItem> getGroundItems() {
-        return new HashSet<>(api.getGroundItems().getAll());
+    private List<GroundItem> getGroundItems() {
+        return methodProvider.getGroundItems().getAll();
     }
 
-    public Set<GroundItem> getCachedItems() {
-        return new HashSet<>(this.items);
+    public List<GroundItem> getCachedItems() {
+        ArrayList<GroundItem> list = new ArrayList<>(this.items);
+        Collections.sort(list, comparator);
+        return list;
     }
 
-    public void update() {
-        Set<GroundItem> ground = getGroundItems();
+    @Override
+    public int update() {
+        List<GroundItem> ground = getGroundItems();
         if (ground.size() == this.items.size())
             //For Simplicity, if the amount of items doesn't change, don't bother comparing
             //Could get really unlucky in that an item is removed and added in the same tick
             //Call update more Yo'
-            return;
+            return 10;
         Set<GroundItem> additions = new HashSet<>(ground);
         additions.removeAll(this.items);
         for (GroundItem item : additions) {
@@ -52,24 +60,55 @@ public abstract class GroundMonitor {
             this.items.remove(item);
             onRemove(item);
         }
+        return 10;
+    }
+
+
+    @Override
+    public boolean stopForeground() {
+        return false;
+    }
+
+
+    public void stop() {
+        stopped = true;
+    }
+
+    @Override
+    public boolean isRunning() {
+        return !stopped;
+    }
+
+    @Override
+    public void onStop(TaskedLightScript script) {
+
+    }
+
+    @Override
+    public void onStart(TaskedLightScript script) {
+        if (this.comparator == null) {
+            this.comparator = new DistanceGroundItemComparator(script);
+        }
+        this.items = new ArrayList<>();
+        this.methodProvider = script;
     }
 
     protected abstract void onAdd(GroundItem item);
 
     protected abstract void onRemove(GroundItem item);
 
-    private static class DistanceGroundItemComparator implements Comparator<GroundItem> {
+    public static class DistanceGroundItemComparator implements Comparator<GroundItem> {
 
-        API api;
+        MethodProvider methodProvider;
 
-        public DistanceGroundItemComparator(API api) {
-            this.api = api;
+        public DistanceGroundItemComparator(MethodProvider methodProvider) {
+            this.methodProvider = methodProvider;
         }
 
         @Override
         public int compare(GroundItem o1, GroundItem o2) {
-            int o1d = api.myPlayer().getPosition().distance(o1.getPosition());
-            int o2d = api.myPlayer().getPosition().distance(o1.getPosition());
+            int o1d = methodProvider.myPlayer().getPosition().distance(o1.getPosition());
+            int o2d = methodProvider.myPlayer().getPosition().distance(o2.getPosition());
             return o1d - o2d;
         }
     }

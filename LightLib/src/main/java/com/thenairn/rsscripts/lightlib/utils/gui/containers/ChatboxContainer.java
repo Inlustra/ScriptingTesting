@@ -1,4 +1,4 @@
-package com.thenairn.rsscripts.lightlib.task.gui;
+package com.thenairn.rsscripts.lightlib.utils.gui.containers;
 
 import com.thenairn.rsscripts.lightlib.utils.gui.LightContainer;
 
@@ -9,10 +9,5 @@ public class ChatboxContainer extends LightContainer {
 
     public ChatboxContainer() {
         super(6, 345, 490, 130);
-    }
-
-    @Override
-    public boolean isHidden() {
-        return super.isHidden();
     }
 }

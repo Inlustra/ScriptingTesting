@@ -1,10 +1,10 @@
 package com.thenairn.rsscripts.lightlib;
 
 
-import com.thenairn.rsscripts.lightlib.task.LightTask;
-import com.thenairn.rsscripts.lightlib.task.selector.TaskDescriptor;
-import com.thenairn.rsscripts.lightlib.task.selector.TaskSelector;
+import com.thenairn.rsscripts.lightlib.utils.gui.LightGUI;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.osbot.rs07.canvas.WrappedCanvas;
 import org.osbot.rs07.script.Script;
 
 import java.awt.*;
@@ -12,20 +12,22 @@ import java.awt.*;
 @Slf4j
 public abstract class LightScript extends Script {
 
-    private LightTask innerScript;
-
-    private volatile boolean isReady = false;
+    @Getter
+    private LightGUI gui;
 
     @Override
     @SuppressWarnings("deprecation")
     public void onStart() throws InterruptedException {
-        super.onStart();
         try {
+            WrappedCanvas canvas = this.getBot().getCanvas();
+            this.gui = new LightGUI(canvas.getWidth(), canvas.getHeight());
+            setupGUI(this.gui);
+            super.onStart();
             LightAPI.get().exchangeContext(this.getBot());
             LightAPI.get().initializeModule();
+            getBot().addMouseListener(this.gui);
+            getBot().getCanvas().addMouseMotionListener(this.gui);
             log.debug("Starting Inlustra.");
-            setInnerScript(new TaskSelector());
-            isReady = true;
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             stop();
@@ -35,15 +37,16 @@ public abstract class LightScript extends Script {
     @Override
     public void onExit() throws InterruptedException {
         super.onExit();
+        getBot().removeMouseListener(this.gui);
+        getBot().getCanvas().removeMouseMotionListener(this.gui);
     }
 
     @Override
     public void onPaint(Graphics2D g2d) {
         super.onPaint(g2d);
-        if (!isReady)
-            return;
         try {
-            innerScript.gui().onPaint(g2d);
+            if (gui == null) return;
+            gui.onPaint(g2d);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             stop();
@@ -53,7 +56,7 @@ public abstract class LightScript extends Script {
     @Override
     public int onLoop() throws InterruptedException {
         try {
-            return innerScript.onLoop();
+            return safeOnLoop();
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             stop();
@@ -61,13 +64,8 @@ public abstract class LightScript extends Script {
         }
     }
 
-    public void setInnerScript(LightTask innerScript) {
-        if (this.innerScript != null) {
-            this.innerScript.onStop(this);
-        }
-        this.innerScript = innerScript;
-        this.innerScript.onStart(this);
-    }
+    protected abstract void setupGUI(LightGUI gui);
 
-    public abstract TaskDescriptor[] getDescriptors();
+    protected abstract int safeOnLoop();
+
 }

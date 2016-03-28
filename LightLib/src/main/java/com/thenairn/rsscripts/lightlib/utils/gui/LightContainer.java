@@ -1,6 +1,7 @@
 package com.thenairn.rsscripts.lightlib.utils.gui;
 
 import com.thenairn.rsscripts.lightlib.utils.gui.event.LightMouseEvent;
+import javafx.scene.effect.Light;
 import lombok.extern.slf4j.Slf4j;
 
 import java.awt.*;
@@ -10,6 +11,8 @@ import java.util.ListIterator;
 
 @Slf4j
 public class LightContainer extends LightComponent {
+    private final Object lock = new Object();
+
     private LightComponent mouseOver = null;
     List<LightComponent> components = new LinkedList<>();
 
@@ -20,7 +23,17 @@ public class LightContainer extends LightComponent {
     public void add(LightComponent... components) {
         for (LightComponent component : components) {
             component.setParent(this);
-            this.components.add(component);
+            synchronized (lock) {
+                this.components.add(component);
+            }
+        }
+    }
+
+    public void remove(LightComponent... components) {
+        for (LightComponent component : components) {
+            synchronized (lock) {
+                this.components.remove(component);
+            }
         }
     }
 
@@ -31,22 +44,26 @@ public class LightContainer extends LightComponent {
 
     @Override
     public void paintComponent(Graphics2D g2d) {
-        for (LightComponent component : components) {
-            component.onPaint((Graphics2D) g2d.create(component.getX(),
-                    component.getY(), component.getWidth(), component.getHeight()));
+        synchronized (lock) {
+            for (LightComponent component : components) {
+                component.onPaint((Graphics2D) g2d.create(component.getX(),
+                        component.getY(), component.getWidth(), component.getHeight()));
+            }
         }
     }
 
 
     public LightComponent getElementAt(int x, int y) {
-        ListIterator<LightComponent> li = components.listIterator(components.size());
-        while (li.hasPrevious()) {
-            LightComponent component = li.previous();
-            if (component.isHidden()) {
-                continue;
-            }
-            if (component.isWithin(x, y)) {
-                return component;
+        synchronized (lock) {
+            ListIterator<LightComponent> li = components.listIterator(components.size());
+            while (li.hasPrevious()) {
+                LightComponent component = li.previous();
+                if (component.isHidden()) {
+                    continue;
+                }
+                if (component.isWithin(x, y)) {
+                    return component;
+                }
             }
         }
         return null;
@@ -131,7 +148,6 @@ public class LightContainer extends LightComponent {
     public boolean mouseDragged(LightMouseEvent e) {
         LightComponent component = getElementAt(e.getX(), e.getY());
         if (component != null) {
-            log.trace("Mouse Dragged for component: " + component.getClass().getSimpleName());
             return component.mouseDragged(new LightMouseEvent(e, component));
         }
         return super.mouseDragged(e);
@@ -141,7 +157,6 @@ public class LightContainer extends LightComponent {
     public boolean blockInput(Point e) {
         LightComponent component = getElementAt((int) e.getX(), (int) e.getY());
         if (component != null) {
-            log.trace("Block Input for component: " + component.getClass().getSimpleName());
             return component.blockInput(new Point((int) e.getX() - component.getX(), (int) e.getY() - component.getY()));
         }
         return false;

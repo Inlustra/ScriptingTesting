@@ -8,6 +8,7 @@ import org.slf4j.helpers.MarkerIgnoringBase;
  */
 public class OSBotLogger extends MarkerIgnoringBase {
 
+
     private static org.osbot.utility.Logger getLogger() {
         return LightAPI.get().logger;
     }
@@ -23,31 +24,32 @@ public class OSBotLogger extends MarkerIgnoringBase {
 
             @Override
             protected void perform(String log) {
-                getLogger().debug(log);
+                if (getLogger() != null) getLogger().debug(log);
             }
 
         }, DEBUG("[DEBUG]") {
             @Override
             protected void perform(String log) {
-                getLogger().debug(log);
+                if (getLogger() != null) getLogger().debug(log);
             }
 
         }, INFO("[INFO]") {
             @Override
             protected void perform(String log) {
-                getLogger().info(log);
+                if (getLogger() != null) getLogger().info(log);
             }
 
         }, WARN("[WARN]") {
             @Override
             protected void perform(String log) {
-                getLogger().warn(log);
+                if (getLogger() != null) getLogger().warn(log);
             }
 
         }, ERROR("[ERROR]") {
             @Override
             protected void perform(String log) {
-                getLogger().error(log);
+
+                if (getLogger() != null) getLogger().error(log);
             }
         };
 
@@ -71,11 +73,11 @@ public class OSBotLogger extends MarkerIgnoringBase {
             if (str == null) {
                 return this.pre + " null";
             }
-            return this.pre + " " + str;
+            return this.pre + " " + String.format(str, objects);
         }
     }
 
-    private boolean trace = true;
+    private boolean trace = false;
     private boolean debug = true;
     private boolean info = true;
     private boolean warn = true;

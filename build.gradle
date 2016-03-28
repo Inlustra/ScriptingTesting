@@ -65,5 +65,5 @@ task cleanScriptsFolder(type: Delete) {
 }
 
 task runOSBot << {
-    javaexec { main="-jar"; args "lib/OSBot 2.4.43.jar" }
+    javaexec { main="-jar"; args "lib/OSBot 2.4.43.jar"; jvmArgs=["-Dsun.java2d.dpiaware=true -fdsadf"] }
 }
