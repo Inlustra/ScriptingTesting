@@ -55,7 +55,6 @@ public abstract class TaskedLightScript extends LightScript {
     private void runForeground() {
         TaskWrapper<ForegroundTask> wrapper = currentTask();
         if (wrapper == null) {
-            log.warn("No task.");
             return;
         }
         if (!wrapper.task.isRunning()) {

@@ -13,7 +13,7 @@ public class HideFromAttackerTask extends UnderAttackBackgroundTask {
 
     @Override
     public boolean onAttackUpdate() {
-        script.myPlayer().isInteracting()
+        //script.myPlayer().isInteracting()
         return true;
     }
 }
