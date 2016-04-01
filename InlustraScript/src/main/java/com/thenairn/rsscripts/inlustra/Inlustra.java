@@ -1,9 +1,8 @@
 package com.thenairn.rsscripts.inlustra;
 
-import com.thenairn.rsscripts.lightlib.LightAPI;
+import com.thenairn.rsscripts.lightlib.gui.LightGUI;
+import com.thenairn.rsscripts.lightlib.gui.containers.InventoryImageContainer;
 import com.thenairn.rsscripts.lightlib.task.TaskedLightScript;
-import com.thenairn.rsscripts.lightlib.utils.gui.LightGUI;
-import com.thenairn.rsscripts.lightlib.utils.gui.containers.InventoryImageContainer;
 import com.thenairn.rsscripts.lightlib.utils.world.GroundMonitor;
 import lombok.extern.slf4j.Slf4j;
 import org.osbot.rs07.api.model.GroundItem;
@@ -11,7 +10,6 @@ import org.osbot.rs07.script.ScriptManifest;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,7 +51,7 @@ public class Inlustra extends TaskedLightScript {
             inventory.getSlot(i).setItem(item.getId(), new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    log.debug("Price of: " + item.getName() + " is : " + LightAPI.get().getItemApi().getPrice(item.getId()));
+                    log.debug("Price of: " + item.getName() + " is : " + getApi().getItemApi().getPrice(item.getId()));
                 }
             });
             if (i++ >= 27) break;

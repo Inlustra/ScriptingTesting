@@ -1,4 +1,4 @@
-package com.thenairn.rsscripts.lightlib.utils.gui.event;
+package com.thenairn.rsscripts.lightlib.gui.event;
 
 /**
  * Created by Thomas Nairn on 16/03/2016.

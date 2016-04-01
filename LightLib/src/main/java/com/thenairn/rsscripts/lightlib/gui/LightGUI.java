@@ -1,6 +1,6 @@
-package com.thenairn.rsscripts.lightlib.utils.gui;
+package com.thenairn.rsscripts.lightlib.gui;
 
-import com.thenairn.rsscripts.lightlib.utils.gui.event.LightMouseEvent;
+import com.thenairn.rsscripts.lightlib.gui.event.LightMouseEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.osbot.rs07.input.mouse.BotMouseListener;
 

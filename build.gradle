@@ -17,6 +17,12 @@ apply plugin: 'idea'
 apply plugin: 'com.github.johnrengelman.shadow'
 
 allprojects {
+
+    configurations {
+        provided
+        compile.extendsFrom provided
+    }
+
     apply plugin: 'java'
     apply plugin: 'idea'
     apply plugin: 'com.github.johnrengelman.shadow'
@@ -27,21 +33,21 @@ allprojects {
 
     dependencies {
         shadow fileTree(dir: rootDir.getPath() + "/lib", include: ['*.jar'])
-        shadow "org.projectlombok:lombok:1.12.6"
+        compile "org.projectlombok:lombok:1.16.8"
         compile 'org.slf4j:slf4j-api:1.7.19'
+    }
+
+    sourceSets {
+        main { compileClasspath += [configurations.provided] }
     }
 
     plugins.withType(IdeaPlugin) {
         idea.module.scopes.COMPILE.plus = [configurations.shadow]
+        idea.module.scopes.PROVIDED.plus += [configurations.provided]
     }
 
     tasks.withType(AbstractCompile) {
         classpath += configurations.shadow
-    }
-
-    configurations {
-        provided
-        compile.extendsFrom provided
     }
 }
 
@@ -65,5 +71,5 @@ task cleanScriptsFolder(type: Delete) {
 }
 
 task runOSBot << {
-    javaexec { main="-jar"; args "lib/OSBot 2.4.43.jar"; jvmArgs=["-Dsun.java2d.dpiaware=true -fdsadf"] }
+    javaexec { main = "-jar"; args "lib/OSBot 2.4.43.jar"; jvmArgs = ["-Dsun.java2d.dpiaware=true -fdsadf"] }
 }

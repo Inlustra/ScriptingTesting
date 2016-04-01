@@ -1,4 +1,7 @@
-package com.thenairn.rsscripts.lightlib.utils.items;
+package com.thenairn.rsscripts.lightlib.api;
+
+import com.thenairn.rsscripts.lightlib.utils.items.RunescapeItem;
+import com.thenairn.rsscripts.lightlib.utils.items.RunescapeItemDetails;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,23 +15,10 @@ import java.util.Map;
 /**
  * Created by Robin Nairn on 12/03/2016.
  */
-public class ItemAPI {
+public class ItemAPI extends LightAPI {
 
     private static final String ITEM_LIST_URL = "https://gist.githubusercontent.com/anonymous/a1aa9894c1acc0c1c201/raw/b8bd35ed57a9cedfb1dc2379212ac79faa979136/IDs.txt";
     private Map<Integer, RunescapeItem> items;
-
-    public ItemAPI init() {
-        if (items != null) {
-            System.out.println("Already initialized the ItemAPI");
-            return this;
-        }
-        items = new HashMap<>();
-        List<RunescapeItem> items = loadItemList();
-        for (RunescapeItem item : items) {
-            this.items.put(item.getId(), item);
-        }
-        return this;
-    }
 
     public RunescapeItem get(int id) {
         if (items == null)
@@ -75,5 +65,14 @@ public class ItemAPI {
             e.printStackTrace();
         }
         return runescapeItems;
+    }
+
+    @Override
+    public void initializeModule() {
+        items = new HashMap<>();
+        List<RunescapeItem> items = loadItemList();
+        for (RunescapeItem item : items) {
+            this.items.put(item.getId(), item);
+        }
     }
 }

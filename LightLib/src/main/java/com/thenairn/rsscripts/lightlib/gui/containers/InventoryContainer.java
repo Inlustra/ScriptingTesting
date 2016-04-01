@@ -1,6 +1,6 @@
-package com.thenairn.rsscripts.lightlib.utils.gui.containers;
+package com.thenairn.rsscripts.lightlib.gui.containers;
 
-import com.thenairn.rsscripts.lightlib.utils.gui.LightContainer;
+import com.thenairn.rsscripts.lightlib.gui.LightContainer;
 
 /**
  * Created by thoma on 26/03/2016.

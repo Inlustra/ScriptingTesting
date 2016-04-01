@@ -1,9 +1,8 @@
-package com.thenairn.rsscripts.lightlib.utils.gui.containers;
+package com.thenairn.rsscripts.lightlib.gui.containers;
 
-import com.thenairn.rsscripts.lightlib.LightAPI;
-import com.thenairn.rsscripts.lightlib.utils.gui.LightComponent;
-import com.thenairn.rsscripts.lightlib.utils.gui.component.LightImage;
-import com.thenairn.rsscripts.lightlib.utils.gui.event.LightMouseEvent;
+import com.thenairn.rsscripts.lightlib.Inlustra;
+import com.thenairn.rsscripts.lightlib.gui.component.LightImage;
+import com.thenairn.rsscripts.lightlib.gui.event.LightMouseEvent;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -50,7 +49,7 @@ public class InventoryImageContainer extends InventoryContainer {
         public void setItem(int id, ActionListener onClick) {
             this.itemId = id;
             this.onClick = onClick;
-            this.setImage(LightAPI.get().getItemApi().get(id).getIcon());
+            this.setImage(Inlustra.get().getItemApi().get(id).getIcon());
         }
 
         @Override

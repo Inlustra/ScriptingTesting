@@ -1,6 +1,6 @@
-package com.thenairn.rsscripts.lightlib.utils.gui.component;
+package com.thenairn.rsscripts.lightlib.gui.component;
 
-import com.thenairn.rsscripts.lightlib.utils.gui.LightComponent;
+import com.thenairn.rsscripts.lightlib.gui.LightComponent;
 import org.osbot.rs07.api.map.Position;
 import org.osbot.rs07.script.MethodProvider;
 

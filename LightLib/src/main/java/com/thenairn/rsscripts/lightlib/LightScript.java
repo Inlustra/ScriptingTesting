@@ -1,7 +1,7 @@
 package com.thenairn.rsscripts.lightlib;
 
 
-import com.thenairn.rsscripts.lightlib.utils.gui.LightGUI;
+import com.thenairn.rsscripts.lightlib.gui.LightGUI;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.osbot.rs07.canvas.WrappedCanvas;
@@ -13,6 +13,9 @@ import java.awt.*;
 public abstract class LightScript extends Script {
 
     @Getter
+    private Inlustra api;
+
+    @Getter
     private LightGUI gui;
 
     @Override
@@ -20,11 +23,12 @@ public abstract class LightScript extends Script {
     public void onStart() throws InterruptedException {
         try {
             WrappedCanvas canvas = this.getBot().getCanvas();
+            this.api = new Inlustra();
             this.gui = new LightGUI(canvas.getWidth(), canvas.getHeight());
             setupGUI(this.gui);
             super.onStart();
-            LightAPI.get().exchangeContext(this.getBot());
-            LightAPI.get().initializeModule();
+            getApi().exchangeContext(this.getBot());
+            getApi().initializeModule();
             getBot().addMouseListener(this.gui);
             getBot().getCanvas().addMouseMotionListener(this.gui);
             log.debug("Starting Inlustra.");

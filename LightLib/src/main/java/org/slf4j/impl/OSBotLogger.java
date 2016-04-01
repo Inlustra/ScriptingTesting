@@ -1,6 +1,7 @@
 package org.slf4j.impl;
 
-import com.thenairn.rsscripts.lightlib.LightAPI;
+import lombok.SneakyThrows;
+import org.osbot.utility.Logger;
 import org.slf4j.helpers.MarkerIgnoringBase;
 
 /**
@@ -8,18 +9,18 @@ import org.slf4j.helpers.MarkerIgnoringBase;
  */
 public class OSBotLogger extends MarkerIgnoringBase {
 
-
-    private static org.osbot.utility.Logger getLogger() {
-        return LightAPI.get().logger;
-    }
-
     private final String name;
 
-    public OSBotLogger(String name) {
+    @SneakyThrows
+    private static Logger getLogger() {
+        return StaticLoggerBinder.getSingleton().call();
+    }
+
+    OSBotLogger(String name) {
         this.name = name;
     }
 
-    enum Level {
+    private enum Level {
         TRACE("[TRACE]") { //Could totally be refactored to use the cOM1 methods.
 
             @Override

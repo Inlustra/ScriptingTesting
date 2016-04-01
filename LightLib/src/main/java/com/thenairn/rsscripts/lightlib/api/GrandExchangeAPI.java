@@ -1,4 +1,4 @@
-package com.thenairn.rsscripts.lightlib.utils.world;
+package com.thenairn.rsscripts.lightlib.api;
 
 import org.osbot.rs07.api.def.ItemDefinition;
 import org.osbot.rs07.api.map.Area;
@@ -6,36 +6,30 @@ import org.osbot.rs07.api.model.Item;
 import org.osbot.rs07.api.model.NPC;
 import org.osbot.rs07.api.model.RS2Object;
 import org.osbot.rs07.api.ui.RS2Widget;
-import org.osbot.rs07.script.API;
 import org.osbot.rs07.utility.ConditionalSleep;
 
 import java.util.Random;
 
-public class GrandExchange {
-    private final API api;
+public class GrandExchangeAPI extends LightAPI {
     private final Area GRAND_EXCHANGE_CENTER = new Area(3154, 3479, 3174, 3500);
-    private final int[] collectWidget = { 465, 6, 1 };
-    private final int[] buyOfferWidget = { 465, 7, 26 };
-    private final int[] itemSelectWidget = { 465, 24, 21 };
-    private final int[] preSlectionWidget = { 162, 38, 0 };
-    private final int[] preNumberWidget = { 162, 32 };
-    private final int[] searchIndexWidget = { 162, 38 };
-    private final int[] searchTextWidget = { 162, 33 };
-    private final int[] chatboxWidget = { 162, 42 };
-    private final int[] priceWidget = { 465, 24, 39 };
-    private final int[] amountWidget = { 465, 24, 32 };
-    private final int[] setPriceWidget = { 465, 24, 12 };
-    private final int[] setAmountWidget = { 465, 24, 7 };
-    private final int[] confirmWidget = { 465, 24, 54 };
-    private final int[] setAllWidget = { 465, 24, 6 };
-
-    public GrandExchange(API api) {
-        this.api = api;
-    }
+    private final int[] collectWidget = {465, 6, 1};
+    private final int[] buyOfferWidget = {465, 7, 26};
+    private final int[] itemSelectWidget = {465, 24, 21};
+    private final int[] preSlectionWidget = {162, 38, 0};
+    private final int[] preNumberWidget = {162, 32};
+    private final int[] searchIndexWidget = {162, 38};
+    private final int[] searchTextWidget = {162, 33};
+    private final int[] chatboxWidget = {162, 42};
+    private final int[] priceWidget = {465, 24, 39};
+    private final int[] amountWidget = {465, 24, 32};
+    private final int[] setPriceWidget = {465, 24, 12};
+    private final int[] setAmountWidget = {465, 24, 7};
+    private final int[] confirmWidget = {465, 24, 54};
+    private final int[] setAllWidget = {465, 24, 6};
 
     public void openGE() {
-        RS2Object geBooth = api.getObjects().closest("Grand Exchange booth");
-        NPC exchangeWorker = api.getNpcs().closest("Grand Exchange Clerk");
+        RS2Object geBooth = getObjects().closest("Grand Exchange booth");
+        NPC exchangeWorker = getNpcs().closest("Grand Exchange Clerk");
 
         int random = new Random().nextInt(10);
         if (geBooth != null && random < 5) {
@@ -43,7 +37,7 @@ public class GrandExchange {
             new ConditionalSleep(2500, 3000) {
                 @Override
                 public boolean condition() {
-                    return api.getGrandExchange().isOpen();
+                    return getGrandExchange().isOpen();
                 }
             }.sleep();
         }
@@ -54,7 +48,7 @@ public class GrandExchange {
 
                 @Override
                 public boolean condition() {
-                    return api.getGrandExchange().isOpen();
+                    return getGrandExchange().isOpen();
                 }
 
             }.sleep();
@@ -63,7 +57,7 @@ public class GrandExchange {
     }
 
     public void collectItems(boolean bank) {
-        if (api.getGrandExchange().isOpen() && collectButton() != null) {
+        if (getGrandExchange().isOpen() && collectButton() != null) {
             if (bank) {
                 collectButton().interact("Collect to bank");
             } else {
@@ -80,8 +74,8 @@ public class GrandExchange {
     }
 
     public void createBuyOffer(String itemName, int price, int amount) {
-        if (api.getGrandExchange().isOpen()) {
-            if (!api.getGrandExchange().isBuyOfferOpen()) {
+        if (getGrandExchange().isOpen()) {
+            if (!getGrandExchange().isBuyOfferOpen()) {
                 initBuyOffer(itemName);
             }
             if (!getItem().equals(itemName)) {
@@ -98,7 +92,7 @@ public class GrandExchange {
                 new ConditionalSleep(2500, 3000) {
                     @Override
                     public boolean condition() {
-                        return !api.getGrandExchange().isBuyOfferOpen();
+                        return !getGrandExchange().isBuyOfferOpen();
                     }
                 }.sleep();
             }
@@ -108,20 +102,20 @@ public class GrandExchange {
     }
 
     private void initBuyOffer(String itemName) {
-        if (api.getGrandExchange().isOpen() && !api.getGrandExchange().isBuyOfferOpen()
+        if (getGrandExchange().isOpen() && !getGrandExchange().isBuyOfferOpen()
                 && buyOfferSlotOne() != null) {
             buyOfferSlotOne().interact("Create buy offer");
             new ConditionalSleep(2500, 3000) {
                 @Override
                 public boolean condition() {
-                    return api.getGrandExchange().isBuyOfferOpen();
+                    return getGrandExchange().isBuyOfferOpen();
                 }
             }.sleep();
         }
     }
 
     private void selectBuyItem(final String itemName) {
-        if (api.getGrandExchange().isBuyOfferOpen() && !getName(itemSelection().getItemId()).equals(itemName)) {
+        if (getGrandExchange().isBuyOfferOpen() && !getName(itemSelection().getItemId()).equals(itemName)) {
             if (itemSelection() != null && preIndex() == null) {
                 itemSelection().interact("Choose item");
                 new ConditionalSleep(2500, 3000) {
@@ -134,7 +128,7 @@ public class GrandExchange {
             if (itemSelection() != null && preIndex() != null && !chatboxText().isVisible()) {
                 if (!enteredText().equals(itemName)) {
                     if (searchText().getMessage().length() == 47) {
-                        api.getKeyboard().typeString(itemName, false);
+                        getKeyboard().typeString(itemName, false);
                         new ConditionalSleep(3000, 3500) {
                             @Override
                             public boolean condition() {
@@ -143,7 +137,7 @@ public class GrandExchange {
                         }.sleep();
                     } else {
                         while (!itemName.contains(enteredText())) {
-                            api.getKeyboard().typeKey('\b');
+                            getKeyboard().typeKey('\b');
 
                         }
 
@@ -153,7 +147,7 @@ public class GrandExchange {
                     // iterate through index children and find the itemName
                     for (RS2Widget indexItem : searchIndex().getChildWidgets()) {
                         if (indexItem.getMessage() != null && indexItem.getMessage().equals(itemName)) {
-                            api.getMouse().click(indexItem.getAbsX(), indexItem.getAbsY(), false);
+                            getMouse().click(indexItem.getAbsX(), indexItem.getAbsY(), false);
                             new ConditionalSleep(2500, 3000) {
 
                                 @Override
@@ -172,8 +166,8 @@ public class GrandExchange {
     }
 
     public void createSellOffer(String itemName, int price, int amount) {
-        if (api.getGrandExchange().isOpen()) {
-            if (!api.getGrandExchange().isSellOfferOpen()) {
+        if (getGrandExchange().isOpen()) {
+            if (!getGrandExchange().isSellOfferOpen()) {
                 initSellOffer(itemName);
             }
             setPrice(price);
@@ -183,7 +177,7 @@ public class GrandExchange {
                 new ConditionalSleep(2500, 3000) {
                     @Override
                     public boolean condition() {
-                        return !api.getGrandExchange().isSellOfferOpen();
+                        return !getGrandExchange().isSellOfferOpen();
                     }
                 }.sleep();
             }
@@ -193,15 +187,15 @@ public class GrandExchange {
     }
 
     private void initSellOffer(String itemName) {
-        if (api.getGrandExchange().isOpen() && !api.getGrandExchange().isSellOfferOpen()) {
-            if (api.getInventory().contains(itemName)) {
-                Item sellItem = api.getInventory().getItem(itemName);
+        if (getGrandExchange().isOpen() && !getGrandExchange().isSellOfferOpen()) {
+            if (getInventory().contains(itemName)) {
+                Item sellItem = getInventory().getItem(itemName);
                 sellItem.interact("Offer");
             }
             new ConditionalSleep(2500, 3000) {
                 @Override
                 public boolean condition() {
-                    return api.getGrandExchange().isSellOfferOpen();
+                    return getGrandExchange().isSellOfferOpen();
                 }
             }.sleep();
         }
@@ -209,7 +203,7 @@ public class GrandExchange {
 
     private void setPrice(int itemPrice) {
 
-        if (api.getGrandExchange().isOpen() && api.getGrandExchange().isOfferScreenOpen()) {
+        if (getGrandExchange().isOpen() && getGrandExchange().isOfferScreenOpen()) {
             if (priceText().getMessage() != null
                     && Integer.parseInt(priceText().getMessage().replaceAll("[\\D]", "")) != itemPrice
                     && preNumber() != null && !preNumber().isVisible()) {
@@ -238,14 +232,14 @@ public class GrandExchange {
             if (getPrice() != itemPrice && preNumber() != null && preNumber().isVisible() && searchText() != null
                     && !searchText().getMessage().replaceAll("[\\D]", "").equals((String.valueOf(itemPrice)))
                     && !chatboxText().isVisible()) {
-                api.getKeyboard().typeString(String.valueOf(itemPrice), true);
+                getKeyboard().typeString(String.valueOf(itemPrice), true);
             }
 
         }
     }
 
     private void setAmount(int itemAmount) {
-        if (api.getGrandExchange().isOpen() && api.getGrandExchange().isOfferScreenOpen()) {
+        if (getGrandExchange().isOpen() && getGrandExchange().isOfferScreenOpen()) {
             if (amountText().getMessage() != null
                     && Integer.parseInt(amountText().getMessage().replaceAll("[\\D]", "")) != itemAmount) {
                 if (amountButton() != null && preNumber() != null && !preNumber().isVisible()) {
@@ -264,7 +258,7 @@ public class GrandExchange {
             if (getAmount() != itemAmount && preNumber() != null && preNumber().isVisible() && searchText() != null
                     && !searchText().getMessage().replaceAll("[\\D]", "").equals((String.valueOf(itemAmount)))
                     && !chatboxText().isVisible()) {
-                api.getKeyboard().typeString(String.valueOf(itemAmount), true);
+                getKeyboard().typeString(String.valueOf(itemAmount), true);
             }
 
         }
@@ -297,7 +291,7 @@ public class GrandExchange {
     }
 
     private RS2Widget searchIndex() {
-        RS2Widget widget = api.getWidgets().get(searchIndexWidget[0], searchIndexWidget[1]);
+        RS2Widget widget = getWidgets().get(searchIndexWidget[0], searchIndexWidget[1]);
         if (widget != null) {
             return widget;
         }
@@ -305,7 +299,7 @@ public class GrandExchange {
     }
 
     private RS2Widget buyOfferSlotOne() {
-        RS2Widget widget = api.getWidgets().get(buyOfferWidget[0], buyOfferWidget[1], buyOfferWidget[2]);
+        RS2Widget widget = getWidgets().get(buyOfferWidget[0], buyOfferWidget[1], buyOfferWidget[2]);
         if (widget != null) {
             return widget;
         }
@@ -313,7 +307,7 @@ public class GrandExchange {
     }
 
     private RS2Widget confirmButton() {
-        RS2Widget widget = api.getWidgets().get(confirmWidget[0], confirmWidget[1], confirmWidget[2]);
+        RS2Widget widget = getWidgets().get(confirmWidget[0], confirmWidget[1], confirmWidget[2]);
         if (widget != null) {
             return widget;
         }
@@ -321,7 +315,7 @@ public class GrandExchange {
     }
 
     private RS2Widget collectButton() {
-        RS2Widget widget = api.getWidgets().get(collectWidget[0], collectWidget[1], collectWidget[2]);
+        RS2Widget widget = getWidgets().get(collectWidget[0], collectWidget[1], collectWidget[2]);
         if (widget != null) {
             return widget;
         }
@@ -329,7 +323,7 @@ public class GrandExchange {
     }
 
     private RS2Widget preIndex() {
-        RS2Widget widget = api.getWidgets().get(preSlectionWidget[0], preSlectionWidget[1], preSlectionWidget[2]);
+        RS2Widget widget = getWidgets().get(preSlectionWidget[0], preSlectionWidget[1], preSlectionWidget[2]);
         if (widget != null) {
             return widget;
         }
@@ -337,7 +331,7 @@ public class GrandExchange {
     }
 
     private RS2Widget itemSelection() {
-        RS2Widget widget = api.getWidgets().get(itemSelectWidget[0], itemSelectWidget[1], itemSelectWidget[2]);
+        RS2Widget widget = getWidgets().get(itemSelectWidget[0], itemSelectWidget[1], itemSelectWidget[2]);
         if (widget != null) {
             return widget;
         }
@@ -345,7 +339,7 @@ public class GrandExchange {
     }
 
     private RS2Widget priceButton() {
-        RS2Widget widget = api.getWidgets().get(setPriceWidget[0], setPriceWidget[1], setPriceWidget[2]);
+        RS2Widget widget = getWidgets().get(setPriceWidget[0], setPriceWidget[1], setPriceWidget[2]);
         if (widget != null) {
             return widget;
         }
@@ -353,7 +347,7 @@ public class GrandExchange {
     }
 
     private RS2Widget priceText() {
-        RS2Widget widget = api.getWidgets().get(priceWidget[0], priceWidget[1], priceWidget[2]);
+        RS2Widget widget = getWidgets().get(priceWidget[0], priceWidget[1], priceWidget[2]);
         if (widget != null) {
             return widget;
         }
@@ -361,7 +355,7 @@ public class GrandExchange {
     }
 
     private RS2Widget chatboxText() {
-        RS2Widget widget = api.getWidgets().get(chatboxWidget[0], chatboxWidget[1]);
+        RS2Widget widget = getWidgets().get(chatboxWidget[0], chatboxWidget[1]);
         if (widget != null) {
             return widget;
         }
@@ -369,7 +363,7 @@ public class GrandExchange {
     }
 
     private RS2Widget preNumber() {
-        RS2Widget widget = api.getWidgets().get(preNumberWidget[0], preNumberWidget[1]);
+        RS2Widget widget = getWidgets().get(preNumberWidget[0], preNumberWidget[1]);
         if (widget != null) {
             return widget;
         }
@@ -377,7 +371,7 @@ public class GrandExchange {
     }
 
     private RS2Widget searchText() {
-        RS2Widget widget = api.getWidgets().get(searchTextWidget[0], searchTextWidget[1]);
+        RS2Widget widget = getWidgets().get(searchTextWidget[0], searchTextWidget[1]);
         if (widget != null) {
             return widget;
         }
@@ -385,7 +379,7 @@ public class GrandExchange {
     }
 
     private RS2Widget amountButton() {
-        RS2Widget widget = api.getWidgets().get(setAmountWidget[0], setAmountWidget[1], setAmountWidget[2]);
+        RS2Widget widget = getWidgets().get(setAmountWidget[0], setAmountWidget[1], setAmountWidget[2]);
         if (widget != null) {
             return widget;
         }
@@ -393,7 +387,7 @@ public class GrandExchange {
     }
 
     private RS2Widget amountText() {
-        RS2Widget widget = api.getWidgets().get(amountWidget[0], amountWidget[1], amountWidget[2]);
+        RS2Widget widget = getWidgets().get(amountWidget[0], amountWidget[1], amountWidget[2]);
         if (widget != null) {
             return widget;
         }
@@ -409,11 +403,15 @@ public class GrandExchange {
     }
 
     private RS2Widget allButton() {
-        RS2Widget widget = api.getWidgets().get(setAllWidget[0], setAllWidget[1], setAllWidget[2]);
+        RS2Widget widget = getWidgets().get(setAllWidget[0], setAllWidget[1], setAllWidget[2]);
         if (widget != null) {
             return widget;
         }
         return null;
     }
 
+    @Override
+    public void initializeModule() {
+
+    }
 }

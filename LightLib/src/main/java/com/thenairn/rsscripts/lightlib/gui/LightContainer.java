@@ -1,13 +1,11 @@
-package com.thenairn.rsscripts.lightlib.utils.gui;
+package com.thenairn.rsscripts.lightlib.gui;
 
-import com.thenairn.rsscripts.lightlib.utils.gui.event.LightMouseEvent;
-import javafx.scene.effect.Light;
+import com.thenairn.rsscripts.lightlib.gui.event.LightMouseEvent;
 import lombok.extern.slf4j.Slf4j;
 
 import java.awt.*;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.List;
-import java.util.ListIterator;
 
 @Slf4j
 public class LightContainer extends LightComponent {
@@ -21,15 +19,24 @@ public class LightContainer extends LightComponent {
     }
 
     public void add(LightComponent... components) {
+        add(Arrays.asList(components));
+    }
+
+    public void add(Collection<? extends LightComponent> components) {
         for (LightComponent component : components) {
             component.setParent(this);
             synchronized (lock) {
                 this.components.add(component);
             }
         }
+
     }
 
     public void remove(LightComponent... components) {
+        remove(Arrays.asList(components));
+    }
+
+    public void remove(Collection<? extends LightComponent> components) {
         for (LightComponent component : components) {
             synchronized (lock) {
                 this.components.remove(component);

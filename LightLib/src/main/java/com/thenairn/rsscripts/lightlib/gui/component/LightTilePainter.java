@@ -1,31 +1,31 @@
-package com.thenairn.rsscripts.lightlib.utils.gui.component;
+package com.thenairn.rsscripts.lightlib.gui.component;
 
-import com.thenairn.rsscripts.lightlib.utils.gui.containers.WorldContainer;
-import javafx.geometry.Pos;
-import org.osbot.P;
+import com.thenairn.rsscripts.lightlib.gui.containers.WorldContainer;
 import org.osbot.rs07.api.map.Position;
 import org.osbot.rs07.script.MethodProvider;
 
 import java.awt.*;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.List;
 
 /**
  * Created by thoma on 28/03/2016.
  */
 public class LightTilePainter extends WorldContainer {
 
+    private final Map<Position, LightTile> tiles = new HashMap<>();
+    private final MethodProvider provider;
     private Color defaultColor = new Color(102, 175, 64, 50);
-    private MethodProvider provider;
-
-    Map<Position, LightTile> tiles = new HashMap<>();
 
     public LightTilePainter(MethodProvider provider) {
         this.provider = provider;
     }
 
     public void addTile(Color color, Position... positions) {
+        addTile(color, Arrays.asList(positions));
+    }
+
+    public void addTile(Color color, Collection<Position> positions) {
         for (Position position : positions) {
             if (position == null) continue;
             LightTile tile = new LightTile(color, provider, position);
@@ -35,6 +35,10 @@ public class LightTilePainter extends WorldContainer {
                 remove(previous);
             }
         }
+    }
+
+    public void addTile(List<Position> positions) {
+        addTile(defaultColor, positions);
     }
 
     public void addTile(Position... positions) {
@@ -48,7 +52,7 @@ public class LightTilePainter extends WorldContainer {
     }
 
     public void clear() {
-        remove(tiles.values().toArray(new LightTile[tiles.size()]));
+        remove(tiles.values());
         tiles.clear();
     }
 

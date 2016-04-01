@@ -1,12 +1,13 @@
 package org.slf4j.impl;
 
+import lombok.Setter;
+import org.osbot.utility.Logger;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.spi.LoggerFactoryBinder;
 
-/**
- * Created by Thomas Nairn on 21/03/2016.
- */
-public class StaticLoggerBinder implements LoggerFactoryBinder {
+import java.util.concurrent.Callable;
+
+public class StaticLoggerBinder implements LoggerFactoryBinder, Callable<Logger> {
 
     /**
      * The unique instance of this class.
@@ -47,5 +48,13 @@ public class StaticLoggerBinder implements LoggerFactoryBinder {
 
     public String getLoggerFactoryClassStr() {
         return loggerFactoryClassStr;
+    }
+
+    @Setter
+    private Logger logger;
+
+    @Override
+    public Logger call() throws Exception {
+        return null;
     }
 }

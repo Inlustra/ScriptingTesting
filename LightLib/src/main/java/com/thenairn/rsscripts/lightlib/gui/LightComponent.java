@@ -1,7 +1,7 @@
-package com.thenairn.rsscripts.lightlib.utils.gui;
+package com.thenairn.rsscripts.lightlib.gui;
 
-import com.thenairn.rsscripts.lightlib.utils.gui.event.LightMouseEvent;
-import com.thenairn.rsscripts.lightlib.utils.gui.util.ParentIterator;
+import com.thenairn.rsscripts.lightlib.gui.event.LightMouseEvent;
+import com.thenairn.rsscripts.lightlib.gui.util.ParentIterator;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.osbot.rs07.canvas.paint.Painter;

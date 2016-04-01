@@ -1,7 +1,7 @@
-package com.thenairn.rsscripts.lightlib.utils.gui.component;
+package com.thenairn.rsscripts.lightlib.gui.component;
 
-import com.thenairn.rsscripts.lightlib.utils.gui.LightComponent;
-import com.thenairn.rsscripts.lightlib.utils.gui.event.LightMouseEvent;
+import com.thenairn.rsscripts.lightlib.gui.LightComponent;
+import com.thenairn.rsscripts.lightlib.gui.event.LightMouseEvent;
 import lombok.Getter;
 import lombok.Setter;
 

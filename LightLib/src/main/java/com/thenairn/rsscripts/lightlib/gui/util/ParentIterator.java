@@ -1,6 +1,6 @@
-package com.thenairn.rsscripts.lightlib.utils.gui.util;
+package com.thenairn.rsscripts.lightlib.gui.util;
 
-import com.thenairn.rsscripts.lightlib.utils.gui.LightComponent;
+import com.thenairn.rsscripts.lightlib.gui.LightComponent;
 
 import java.util.Iterator;
 

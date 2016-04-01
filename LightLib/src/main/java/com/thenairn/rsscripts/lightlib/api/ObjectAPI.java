@@ -1,10 +1,9 @@
-package com.thenairn.rsscripts.lightlib.utils.object;
+package com.thenairn.rsscripts.lightlib.api;
 
 import lombok.extern.slf4j.Slf4j;
 import org.osbot.rs07.api.map.Area;
 import org.osbot.rs07.api.map.Position;
 import org.osbot.rs07.api.model.RS2Object;
-import org.osbot.rs07.script.MethodProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,11 +12,11 @@ import java.util.List;
  * Created by thoma on 30/03/2016.
  */
 @Slf4j
-public class ObjectAPI {
-    private MethodProvider provider;
+public class ObjectAPI extends LightAPI {
 
-    public ObjectAPI(MethodProvider provider) {
-        this.provider = provider;
+    @Override
+    public void initializeModule() {
+
     }
 
     public List<Position> getObjectPositions(RS2Object object) {
@@ -33,11 +32,7 @@ public class ObjectAPI {
         return objectPositions;
     }
 
-    public Area getObjectArea(RS2Object object) {
-        return positionsToArea(getObjectPositions(object));
-    }
-
-    public List<Position> getObjectContourPositions(RS2Object object, int around) {
+    public List<Position> getObjectPositions(RS2Object object, int around) {
         int sx = object.getSizeX();
         int sy = object.getSizeY();
         int startX = object.getX() - around;
@@ -49,8 +44,7 @@ public class ObjectAPI {
             for (int y = startY; y < endY; y++) {
                 if (y >= object.getY() && y < object.getY() + sy
                         && x >= object.getX() && x < object.getX() + sx) {
-                    y += sy - 1;
-                    continue;
+                    y += sy;
                 }
                 Position p = new Position(x, y, object.getZ());
                 positionsAroundObject.add(p);
@@ -60,11 +54,24 @@ public class ObjectAPI {
         return positionsAroundObject;
     }
 
-    public Area getObjectContourArea(RS2Object object, int around) {
-        return positionsToArea(getObjectContourPositions(object, around));
+    public Area getObjectArea(RS2Object object) {
+        return getObjectArea(object, 0);
     }
 
-    private Area positionsToArea(List<Position> positionsAroundObject) {
-        return new Area(positionsAroundObject.toArray(new Position[positionsAroundObject.size()]));
+    public Area getObjectArea(RS2Object object, int around) {
+        return new Area(object.getX() - around, object.getY() - around,
+                object.getX() + object.getSizeX() + around, object.getY() + object.getSizeY() + around);
     }
+
+    public static boolean canStealFrom(RS2Object object) {
+        if (object == null)
+            return false;
+        for (String str : object.getActions()) {
+            if (str == null) continue;
+            if (str.toLowerCase().contains("steal"))
+                return true;
+        }
+        return false;
+    }
+
 }
