@@ -12,10 +12,6 @@ buildscript {
     }
 }
 
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'com.github.johnrengelman.shadow'
-
 allprojects {
 
     configurations {
@@ -33,7 +29,7 @@ allprojects {
 
     dependencies {
         shadow fileTree(dir: rootDir.getPath() + "/lib", include: ['*.jar'])
-        compile "org.projectlombok:lombok:1.16.8"
+        shadow "org.projectlombok:lombok:1.16.8"
         compile 'org.slf4j:slf4j-api:1.7.19'
     }
 

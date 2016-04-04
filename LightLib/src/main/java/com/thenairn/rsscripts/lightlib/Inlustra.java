@@ -28,13 +28,7 @@ public class Inlustra extends LightAPI {
     }
 
     @Override
-    protected LightAPI[] providers() {
-        return new LightAPI[]{itemAPI, grandExchangeAPI, objectAPI, worldAPI};
-    }
-
-    @Override
     public void initializeModule() {
-        super.initializeModule(this);
         log.debug("Inlustra took " + elapsed.getFormatted("s") + " seconds to start");
     }
 

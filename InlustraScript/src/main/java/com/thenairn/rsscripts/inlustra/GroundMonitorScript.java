@@ -18,10 +18,10 @@ import java.util.List;
 @Slf4j
 @ScriptManifest(version = 13, author = "Inlustra", logo = "",
         name = "Ground Monitor 13", info = "The task toolkit.")
-public class Inlustra extends TaskedLightScript {
+public class GroundMonitorScript extends TaskedLightScript {
 
     InventoryImageContainer inventory;
-    GroundMonitor monitor = new GroundMonitor() {
+    com.thenairn.rsscripts.lightlib.utils.world.GroundMonitor monitor = new com.thenairn.rsscripts.lightlib.utils.world.GroundMonitor() {
         @Override
         protected void onAdd(GroundItem item) {
             updateGUI();
@@ -35,7 +35,7 @@ public class Inlustra extends TaskedLightScript {
 
     @Override
     protected void setupGUI(LightGUI gui) {
-        gui.add(inventory = new InventoryImageContainer());
+        gui.add(inventory = new InventoryImageContainer(getApi().getItemAPI()));
     }
 
     @Override
@@ -48,12 +48,8 @@ public class Inlustra extends TaskedLightScript {
         List<GroundItem> items = monitor.getCachedItems();
         for (GroundItem item : items) {
 
-            inventory.getSlot(i).setItem(item.getId(), new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    log.debug("Price of: " + item.getName() + " is : " + getApi().getItemApi().getPrice(item.getId()));
-                }
-            });
+            inventory.getSlot(i).setItem(item.getId(), e ->
+                    log.debug("Price of: " + item.getName() + " is : " + getApi().getItemAPI().getPrice(item.getId())));
             if (i++ >= 27) break;
         }
     }

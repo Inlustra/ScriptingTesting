@@ -1,6 +1,7 @@
 package com.thenairn.rsscripts.lightlib.gui.containers;
 
 import com.thenairn.rsscripts.lightlib.Inlustra;
+import com.thenairn.rsscripts.lightlib.api.ItemAPI;
 import com.thenairn.rsscripts.lightlib.gui.component.LightImage;
 import com.thenairn.rsscripts.lightlib.gui.event.LightMouseEvent;
 import lombok.Getter;
@@ -14,9 +15,11 @@ import java.awt.event.ActionListener;
 public class InventoryImageContainer extends InventoryContainer {
 
     private ItemSlot[] itemSlots = new ItemSlot[28];
+    private ItemAPI itemAPI;
 
-    public InventoryImageContainer() {
+    public InventoryImageContainer(ItemAPI itemAPI) {
         super();
+        this.itemAPI = itemAPI;
         this.opaque = true;
         this.background = Color.BLACK;
         for (int i = 0; i < itemSlots.length; i++) {
@@ -49,7 +52,7 @@ public class InventoryImageContainer extends InventoryContainer {
         public void setItem(int id, ActionListener onClick) {
             this.itemId = id;
             this.onClick = onClick;
-            this.setImage(Inlustra.get().getItemApi().get(id).getIcon());
+            this.setImage(itemAPI.get(id).getIcon());
         }
 
         @Override

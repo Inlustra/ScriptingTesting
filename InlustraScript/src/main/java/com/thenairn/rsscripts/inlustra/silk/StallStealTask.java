@@ -56,7 +56,7 @@ public class StallStealTask implements ForegroundTask {
         List<RS2Object> objects = script.getObjects().get(pos.getX(), pos.getY());
         if (objects.size() > 0) {
             RS2Object object = objects.get(0);
-            if (SilkStealer.canStealFrom(object)) {
+            if (script.getApi().getObjectAPI().canStealFrom(object)) {
                 if (stallHover == null) {
                     stallHover = aroundStall.getRandomPosition();
                     stallHover.hover(script.getBot());
